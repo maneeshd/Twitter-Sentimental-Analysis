@@ -4,33 +4,33 @@
 @intepreter: Python 3.6.1
 
 Application to scrape IMDb for celebrity details and then perform Sentiment
-Analysis on the celebrities on Twitter
+Analysis on the celebrities Twitter account.
 """
-from sqlite3 import connect
-try:
-    from json import dump
-except ImportError:
-    from simplejson import dump
 from datetime import datetime
+from json import dump
 from os import getcwd
+from sqlite3 import connect
 
-Scraper = __import__("Scraper")
-Sentiment = __import__("TwitterSentiment")
+SCRAPER = __import__("Scraper")
+SENTIMENT = __import__("TwitterSentiment")
 URL = "http://m.imdb.com/feature/bornondate"
 
 
 def main():
+    """
+    Scrape IMdb for celb data and perform sentiment analysis on their tweets.
+    """
     print("TWITTER SENTIMENTAL ANALYSIS")
     print("-" * len("TWITTER SENTIMENTAL ANALYSIS"))
 
     # get the scraper object to scrape IMDb
-    my_scraper = Scraper.ImdbScraper(URL)
+    my_scraper = SCRAPER.ImdbScraper(URL)
     print("Scraping IMDb...Please wait...")
     my_scraper.scrape_imdb()
     print("Successfully scraped IMDb...\n")
 
     # Perforn Twitter Sentiment Analysis
-    sentiment_analyzer = Sentiment.TwitterSentiment()
+    sentiment_analyzer = SENTIMENT.TwitterSentiment()
     result = sentiment_analyzer.get_twitter_sentiment()
     if result == -1:
         print("Twitter Sentiment Analysis Failed...")
@@ -40,7 +40,8 @@ def main():
     try:
         with connect("./data/celebData.db") as con:
             cur = con.cursor()
-            cur.execute("SELECT * FROM CELEB_DATA;")    # Get the result data from db and print.
+            # Get the result data from db and print.
+            cur.execute("SELECT * FROM CELEB_DATA;")
             celeb_list = list()
             for row in cur.fetchall():
                 celeb = dict()
@@ -59,19 +60,17 @@ def main():
 
                 print("Overall Twitter Sentiment: %s\n" % row[4])
                 celeb["Twitter Sentiment"] = row[4]
-
                 celeb_list.append(celeb)
-        
         # Dump the results into a JSON file.
         suffix = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         file_name = "Sentiment-Analysis-Result_%s.json" % suffix
 
-        with open("./results/%s" % file_name, "w") as fs:
-            dump(celeb_list, fs, ensure_ascii=True, indent=2)
+        with open("./results/%s" % file_name, "w") as f_stream:
+            dump(celeb_list, f_stream, ensure_ascii=True, indent=2)
 
         print("Result JSON created: %s" % (getcwd() + file_name))
-    except Exception as e:
-        print("An Exception Occurred:\n%s" % e)
+    except Exception as exp:
+        print("An Exception Occurred:\n%s" % exp)
         exit(1)
     print("THANK YOU")
     return 0

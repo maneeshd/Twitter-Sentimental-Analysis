@@ -1,7 +1,6 @@
 """
 @author: Maneesh D
 @date: 05-Jun-17
-@intepreter: Python 3.6.1
 """
 from re import sub
 from sqlite3 import connect
@@ -18,10 +17,13 @@ class TwitterSentiment:
         """
         Constructor
         """
-        self.__CONSUMER_KEY = "vUvRWNa8TBlJJXKuAzwPJUl8Y"
-        self.__CONSUMER_SECRET = "KZW9n2dbpXklGre61yL1u9Gch9q07qOC0Y00vYkZIODTDpoMpp"
-        self.__ACCESS_TOKEN = "2876373157-XOwXaBKhT0VYgCqn5BCTrQZAfwP7vTM7m07N171"
-        self.__ACCESS_TOKEN_SECRET = "YPNqyHZivGHk0kZ1GngomqKBBt5owdTsu3Kie3qRwhqhY"
+        self.__consumer_key = "vUvRWNa8TBlJJXKuAzwPJUl8Y"
+        self.__consumer_secret = "KZW9n2dbpXklGre61yL1u9" \
+                                 "Gch9q07qOC0Y00vYkZIODTDpoMpp"
+        self.__access_token = "2876373157-XOwXaBKhT0VYgCq" \
+                              "n5BCTrQZAfwP7vTM7m07N171"
+        self.__access_token_secret = "YPNqyHZivGHk0kZ1Gngomq" \
+                                     "KBBt5owdTsu3Kie3qRwhqhY"
 
     @staticmethod
     def __get_data():
@@ -35,8 +37,9 @@ class TwitterSentiment:
                 # Return all the celeb names in db.
                 cur.execute("SELECT NAME FROM CELEB_DATA;")
                 return cur.fetchall()
-        except:
-            print("An Exception Occurred: Could not get celeb data from db.")
+        except Exception:
+            print("!!! An Exception Occurred: "
+                  "Could not get celeb data from db !!!")
             return -1
 
     @staticmethod
@@ -52,23 +55,25 @@ class TwitterSentiment:
                 for d in data:
                     # Update table with sentiment for the celeb.
                     for key in d.keys():
-                        cur.execute("UPDATE CELEB_DATA SET SENTIMENT=? WHERE NAME=?;",
+                        cur.execute("UPDATE CELEB_DATA SET "
+                                    "SENTIMENT=? WHERE NAME=?;",
                                     (d.get(key, "NA"), key,))
                         con.commit()
-        except:
-            print("An Exception Occurred: Could not update sentiment data in db.")
+        except Exception:
+            print("!!! An Exception Occurred: "
+                  "Could not update sentiment data in db !!!")
             return -1
 
     @staticmethod
     def __normalize_tweet(tweet):
         """
-        Utility function to clean tweet text by removing links, special characters
-        using simple regex statements.
+        Utility function to clean tweet text by removing links,
+        special characters using simple regex statements.
         """
         return ' '.join(sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])"
                             "|(\w+://\S+)", "", tweet).split())
 
-    def __evaluate_tweet_sentiment(self, tweet):
+    def __get_tweet_polarity(self, tweet):
         """
         Get the tweets sentiment polarity.
         :param tweet: The tweet text.
@@ -90,17 +95,19 @@ class TwitterSentiment:
 
             print("Authorizing app...")
             # Create OAuthHandler object
-            auth = OAuthHandler(self.__CONSUMER_KEY, self.__CONSUMER_SECRET)
+            auth = OAuthHandler(self.__consumer_key,
+                                self.__consumer_secret)
 
             # Set access token and secret
-            auth.set_access_token(self.__ACCESS_TOKEN, self.__ACCESS_TOKEN_SECRET)
+            auth.set_access_token(self.__access_token,
+                                  self.__access_token_secret)
 
             # Create tweepy API object to fetch tweets
             api = API(auth)
 
             # For each celeb in celeb list perform setiment analysis
             sentiment_list = list()
-            print("Performing Twitter Sentiment Analysis...Please Wait...")
+            print("\nPerforming Twitter Sentiment Analysis...Please Wait...")
             for celeb in list(celeb_data):
                 """
                 For each celeb, get the tweets, calculate sentiment and
@@ -116,7 +123,7 @@ class TwitterSentiment:
                 tweets = api.search(q=celeb_name, count=100)
                 for tweet in tweets:
                     # get the tweets sentiment polarity
-                    tweet_polarity = self.__evaluate_tweet_sentiment(tweet.text)
+                    tweet_polarity = self.__get_tweet_polarity(tweet.text)
 
                     # decide positive negative or neutral based on polarity
                     if tweet_polarity > 0:
@@ -143,6 +150,6 @@ class TwitterSentiment:
                 return -1
             print("Sentiment data successfully updated in db...")
             return 1
-        except Exception as e:
-            print("Exception: %s" % e)
+        except Exception as exp:
+            print("!!! Exception: %s !!!" % exp)
             return -1
