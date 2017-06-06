@@ -2,9 +2,13 @@
 
 ## Running the application
 
-*Make sure you have all the requirements installed. See README or run `pip install -r requirements.txt --update`*
+*Make sure you have all the requirements installed. See README or run 
 
-**To run: `To Run: python App.py`**
+  `pip install -r requirements.txt --update`*
+
+**Run the application using:**
+  
+  **`python App.py`**
 
 ## Problem Statement
 
