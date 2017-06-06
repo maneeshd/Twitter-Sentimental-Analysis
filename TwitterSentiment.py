@@ -133,7 +133,9 @@ class TwitterSentiment:
                     else:
                         negative += 1
                 # Decide the overall sentiment for the celeb
-                if positive >= neutral and positive >= negative:
+                if positive == 0 and negative == 0 and neutral == 0:
+                    celeb_sentiment[celeb_name] = "Does not have a Twitter Account"
+                elif positive >= neutral and positive >= negative:
                     celeb_sentiment[celeb_name] = "POSITIVE"
                 elif neutral >= positive and neutral >= negative:
                     celeb_sentiment[celeb_name] = "NEUTRAL"
