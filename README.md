@@ -4,7 +4,7 @@
 
 *Make sure you have all the requirements installed. See README or run*
 
-  *`pip install -r requirements.txt --update`*
+  *`pip install -r requirements.txt --upgrade`*
 
 **Run the application using:**
   
