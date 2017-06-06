@@ -3,7 +3,6 @@
 @date: 05-Jun-17
 """
 from sqlite3 import connect, Error
-
 from bs4 import BeautifulSoup
 from selenium.webdriver import Firefox
 
