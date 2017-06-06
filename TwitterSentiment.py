@@ -122,7 +122,8 @@ class TwitterSentiment:
                 # Get the last 100 tweets from twitter for the celeb.
                 tweets = api.search(q=celeb_name, count=100)
                 if len(tweets) == 0:
-                    celeb_sentiment[celeb_name] = "Does not have a Twitter Account"
+                    celeb_sentiment[celeb_name] = "Does not have a " \
+                                                  "Twitter Account"
                     continue
                 for tweet in tweets:
                     # get the tweets sentiment polarity
