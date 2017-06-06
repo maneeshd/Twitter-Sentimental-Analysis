@@ -1,1 +1,48 @@
-# Twitter-Sentimental-Analysis
+# **Twitter-Sentimental-Analysis**
+
+**`To Run: python App.py`**
+
+## Problem Statement
+
+IMDB provides a list of celebrities born on the current date. Below is the link: http://m.imdb.com/feature/bornondate
+
+Get the list of these celebrities from this webpage using web scraping (the ones that are displayed i.e top 10). You have to extract the below information:
+
+* Name of the celebrity
+* Celebrity Image
+* Profession
+* Best Work
+
+Once you have this list, run a sentiment analysis on twitter for each celebrity and finally the output should be in the below format
+
+* Name of the celebrity:
+* Celebrity Image:
+* Profession:
+* Best Work:
+* Overall Sentiment on Twitter: Positive, Negative or Neutral
+
+## Tools Used/Requirements
+
+1. [Python 3.6.1 (64-bit)](https://www.python.org/downloads/) - Well, you know what it is.
+
+2. [Beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/) - Python library for pulling data out of HTML and XML files.
+
+3. [Tweepy](http://www.tweepy.org/) - OpenSource python library for Twitter API.
+
+4. [Selenium](https://pypi.python.org/pypi/selenium) - The webdriver kit emulates a web-browser and executes JavaScripts to load the dynamic content.
+
+5. [Textblob](https://textblob.readthedocs.io/en/dev/) - Python library to perform sentiment analysis
+
+6. [lxml](http://lxml.de/) - A fast html and xml parser for beautifulsoup4
+
+7. [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) - Web Browser to perform web scraping.
+
+8. [Gecko Driver](https://github.com/mozilla/geckodriver/releases) - Driver for Selenium to invoke Firefox. 
+
+*Note: Requires Firefox Web browser to work.*
+
+## Author
+
+Maneesh D
+
+maneeshd77@gmail.com
