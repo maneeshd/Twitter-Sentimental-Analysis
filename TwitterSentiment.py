@@ -121,6 +121,9 @@ class TwitterSentiment:
 
                 # Get the last 100 tweets from twitter for the celeb.
                 tweets = api.search(q=celeb_name, count=100)
+                if len(tweets) == 0:
+                    celeb_sentiment[celeb_name] = "Does not have a Twitter Account"
+                    continue
                 for tweet in tweets:
                     # get the tweets sentiment polarity
                     tweet_polarity = self.__get_tweet_polarity(tweet.text)
@@ -133,9 +136,7 @@ class TwitterSentiment:
                     else:
                         negative += 1
                 # Decide the overall sentiment for the celeb
-                if positive == 0 and negative == 0 and neutral == 0:
-                    celeb_sentiment[celeb_name] = "Does not have a Twitter Account"
-                elif positive >= neutral and positive >= negative:
+                if positive >= neutral and positive >= negative:
                     celeb_sentiment[celeb_name] = "POSITIVE"
                 elif neutral >= positive and neutral >= negative:
                     celeb_sentiment[celeb_name] = "NEUTRAL"
