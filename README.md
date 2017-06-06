@@ -1,6 +1,10 @@
 # **Twitter-Sentimental-Analysis**
 
-**`To Run: python App.py`**
+## Running the application
+
+*Make sure you have all the requirements installed. See README or run `pip install -r requirements.txt --update`*
+
+**To run: `To Run: python App.py`**
 
 ## Problem Statement
 
@@ -42,7 +46,5 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 *Note: Requires Firefox Web browser to work.*
 
 ## Author
-
-Maneesh D
-
+Maneesh D - 
 maneeshd77@gmail.com
