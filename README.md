@@ -4,7 +4,7 @@
 
 1. Make sure you have all the requirements installed. See requirements.txt or run
 
-        *`pip install -r requirements.txt --upgrade`*
+   *`pip install -r requirements.txt --upgrade`*
 
 2. Make sure you have the latest version of Mozilla Firefox installed and latest version of geckodriver in utils folder.
 
