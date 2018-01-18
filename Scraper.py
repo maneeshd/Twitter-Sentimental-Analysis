@@ -5,6 +5,7 @@
 from sqlite3 import connect, Error
 from bs4 import BeautifulSoup
 from selenium.webdriver import Firefox
+from traceback import print_exc
 
 
 class ImdbScraper:
@@ -107,5 +108,6 @@ class ImdbScraper:
 
             print("Data Successfully Scraped and dumped into db...")
         except Exception as exp:
+            print_exc()
             print("Exception: %s" % exp)
             exit(1)
