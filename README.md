@@ -6,6 +6,8 @@
 
   *`pip install -r requirements.txt --upgrade`*
 
+*Make sure you have the latest version of Mozilla Firefox installed and latest version of geckodriver in utils folder.*
+
 **Run the application using:**
   
   **`python App.py`**
@@ -47,8 +49,7 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 
 8. [Gecko Driver](https://github.com/mozilla/geckodriver/releases) - Driver for Selenium to invoke Firefox. 
 
-*Note: Requires Firefox Web browser to work.*
+*Note: Requires Mozilla Firefox Web browser to work.*
 
 ## Author
-Maneesh D - 
-maneeshd77@gmail.com
+Maneesh D - maneeshd77@gmail.com
