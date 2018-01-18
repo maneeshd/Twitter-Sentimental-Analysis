@@ -2,11 +2,11 @@
 
 ## Running the application
 
-*Make sure you have all the requirements installed. See README or run*
+1. Make sure you have all the requirements installed. See requirements.txt or run
 
   *`pip install -r requirements.txt --upgrade`*
 
-*Make sure you have the latest version of Mozilla Firefox installed and latest version of geckodriver in utils folder.*
+2. Make sure you have the latest version of Mozilla Firefox installed and latest version of geckodriver in utils folder.
 
 **Run the application using:**
   
