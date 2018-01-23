@@ -35,7 +35,7 @@ class TwitterSentiment:
             print("[KeyError] Appropriate Twitter API Keys not found in keys file.\nExiting...")
             exit(1)
         except Exception as exp:
-            print("[ERROR] %s" % e)
+            print("[ERROR] %s" % exp)
             exit(1)
 
     @staticmethod
