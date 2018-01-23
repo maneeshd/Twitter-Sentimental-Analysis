@@ -2,11 +2,15 @@
 @author: Maneesh D
 @date: 05-Jun-17
 """
+from json import load
+from os import path
 from re import sub
 from sqlite3 import connect
 
 from textblob import TextBlob
 from tweepy import API, OAuthHandler
+
+DIR_PATH = path.dirname(path.abspath(__file__))
 
 
 class TwitterSentiment:
@@ -17,13 +21,22 @@ class TwitterSentiment:
         """
         Constructor
         """
-        self.__consumer_key = "vUvRWNa8TBlJJXKuAzwPJUl8Y"
-        self.__consumer_secret = "KZW9n2dbpXklGre61yL1u9" \
-                                 "Gch9q07qOC0Y00vYkZIODTDpoMpp"
-        self.__access_token = "2876373157-XOwXaBKhT0VYgCq" \
-                              "n5BCTrQZAfwP7vTM7m07N171"
-        self.__access_token_secret = "YPNqyHZivGHk0kZ1Gngomq" \
-                                     "KBBt5owdTsu3Kie3qRwhqhY"
+        try:
+            with open("%s/data/twitter_api_keys.dat" % DIR_PATH) as f:
+                api_keys = load(f)
+            self.__consumer_key = api_keys["consumer_key"]
+            self.__consumer_secret = api_keys["consumer_secret"]
+            self.__access_token = api_keys["access_token"]
+            self.__access_token_secret = api_keys["access_token_secret"]
+        except (FileNotFoundError, IOError):
+            print("[IOError] Twitter API Keys file not found.\nExiting...")
+            exit(1)
+        except KeyError:
+            print("[KeyError] Appropriate Twitter API Keys not found in keys file.\nExiting...")
+            exit(1)
+        except Exception as exp:
+            print("[ERROR] %s" % e)
+            exit(1)
 
     @staticmethod
     def __get_data():
@@ -32,14 +45,13 @@ class TwitterSentiment:
         :return: List of celeb data.
         """
         try:
-            with connect("./data/celebData.db") as con:
+            with connect("%s/data/celebData.db" % DIR_PATH) as con:
                 cur = con.cursor()
                 # Return all the celeb names in db.
                 cur.execute("SELECT NAME FROM CELEB_DATA;")
                 return cur.fetchall()
         except Exception:
-            print("!!! An Exception Occurred: "
-                  "Could not get celeb data from db !!!")
+            print("!!! An Exception Occurred: Could not get celeb data from db !!!")
             return -1
 
     @staticmethod
@@ -50,14 +62,12 @@ class TwitterSentiment:
         :return: None
         """
         try:
-            with connect("./data/celebData.db") as con:
+            with connect("%s/data/celebData.db" % DIR_PATH) as con:
                 cur = con.cursor()
                 for d in data:
                     # Update table with sentiment for the celeb.
                     for key in d.keys():
-                        cur.execute("UPDATE CELEB_DATA SET "
-                                    "SENTIMENT=? WHERE NAME=?;",
-                                    (d.get(key, "NA"), key,))
+                        cur.execute("UPDATE CELEB_DATA SET SENTIMENT=? WHERE NAME=?;", (d.get(key, "NA"), key,))
                         con.commit()
         except Exception:
             print("!!! An Exception Occurred: "
@@ -122,8 +132,7 @@ class TwitterSentiment:
                 # Get the last 100 tweets from twitter for the celeb.
                 tweets = api.search(q=celeb_name, count=100)
                 if len(tweets) == 0:
-                    celeb_sentiment[celeb_name] = "Does not have a " \
-                                                  "Twitter Account"
+                    celeb_sentiment[celeb_name] = "NA"
                     continue
                 for tweet in tweets:
                     # get the tweets sentiment polarity
