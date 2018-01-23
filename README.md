@@ -51,5 +51,7 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 
 *Note: Requires Mozilla Firefox Web browser to work.*
 
+*API Keys for Twitter has to be put in /data/twitter_api_keys.dat*
+
 ## Author
 Maneesh D - maneeshd77@gmail.com
