@@ -6,7 +6,6 @@ from json import load
 from os import path
 from re import sub
 from sqlite3 import connect
-
 from textblob import TextBlob
 from tweepy import API, OAuthHandler
 
