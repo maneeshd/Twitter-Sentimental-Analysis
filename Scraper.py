@@ -6,6 +6,11 @@ from sqlite3 import connect, Error
 from bs4 import BeautifulSoup
 from selenium.webdriver import Firefox
 from traceback import print_exc
+from os import path
+from datetime import datetime
+
+
+DIR_PATH = path.dirname(path.abspath(__file__))
 
 
 class ImdbScraper:
@@ -26,7 +31,7 @@ class ImdbScraper:
         :return: None
         """
         try:
-            with connect("./data/celebData.db") as con:
+            with connect("%s/data/celebData.db" % DIR_PATH) as con:
                 cur = con.cursor()
                 cur.execute("DROP TABLE IF EXISTS CELEB_DATA;")
                 cur.execute("CREATE TABLE CELEB_DATA("
@@ -60,7 +65,7 @@ class ImdbScraper:
         """
         try:
             # Initialize the firefox driver.
-            driver = Firefox(executable_path="./utils/geckodriver.exe")
+            driver = Firefox(executable_path="%s/utils/geckodriver.exe" % DIR_PATH)
 
             # Run the dynamic content on the webpage.
             driver.get(self.__url)
@@ -76,25 +81,31 @@ class ImdbScraper:
             try:
                 crawler = BeautifulSoup(page_source, "lxml")
             except Exception:
+                print("[INFO] lxml parser not found. Using html parser...")
                 crawler = BeautifulSoup(page_source, "html.parser")
 
             # Get the required details from the page
-            page = crawler.find("section", "posters list")
-            born_on_date = page.findChild("h1").text
+            born_on_date = datetime.now().strftime("%B %d")
             print("Getting Data for celebrities born on %s.." % born_on_date)
 
             # Get the celeb details from HTML and put it in the celeb list
-            for link in crawler.find_all("a", class_="poster "):
+            count = 0
+            for div in crawler.find_all("div", class_="lister-item mode-detail"):
+                if count >= 10:
+                    break
+
                 celeb = dict()
+
                 # Parse  celeb name
-                name = link.find("span", "title").text
+                name = div.find("div", "lister-item-content").find("h3", "lister-item-header").find("a").text.strip()
 
                 # parse celeb pic
-                img = link.img["src"]
+                img = div.find("div", "lister-item-image").find("a").img["src"].strip()
 
                 # get profession and best_work
-                profession, best_work = link.find("div",
-                                                  "detail").text.split(",")
+                profession, best_work = div.find("div", "lister-item-content").find("p", "text-muted text-small").text.split("|")
+                profession = profession.strip()
+                best_work = best_work.strip()
 
                 # Form a dict for the celeb and push it into celeb list.
                 celeb["Name"] = name
@@ -102,6 +113,7 @@ class ImdbScraper:
                 celeb["Profession"] = profession
                 celeb["Best Work"] = best_work
                 self.__celeb_list.append(celeb)
+                count += 1
 
             # Dump the data into sqlite3 db
             self.__dump_into_db()
