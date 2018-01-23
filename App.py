@@ -9,8 +9,10 @@ Analysis on the celebrities Twitter account.
 from datetime import datetime
 from json import dump
 from os import getcwd
+from os import path
 from sqlite3 import connect
 
+DIR_PATH = path.dirname(path.abspath(__file__))
 SCRAPER = __import__("Scraper")
 SENTIMENT = __import__("TwitterSentiment")
 URL = "http://m.imdb.com/feature/bornondate"
@@ -38,7 +40,7 @@ def main():
     print("\nThe Twitter Sentiment Result:")
     print("-" * len("The Twitter Sentiment Result:"))
     try:
-        with connect("./data/celebData.db") as con:
+        with connect("%s/data/celebData.db" % DIR_PATH) as con:
             cur = con.cursor()
             # Get the result data from db and print.
             cur.execute("SELECT * FROM CELEB_DATA;")
@@ -65,7 +67,7 @@ def main():
         suffix = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         file_name = "Sentiment-Analysis-Result_%s.json" % suffix
 
-        with open("./results/%s" % file_name, "w") as f_stream:
+        with open("%s/results/%s" % (DIR_PATH, file_name), "w") as f_stream:
             dump(celeb_list, f_stream, ensure_ascii=True, indent=2)
 
         print("Result JSON created: %s" % (getcwd() + file_name))
@@ -74,6 +76,7 @@ def main():
         exit(1)
     print("THANK YOU")
     return 0
+
 
 if __name__ == '__main__':
     main()
