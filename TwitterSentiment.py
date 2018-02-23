@@ -21,7 +21,7 @@ class TwitterSentiment:
         Constructor
         """
         try:
-            with open("%s/data/twitter_api_keys.dat" % DIR_PATH) as f:
+            with open("%s/data/twitter_api_keys.json" % DIR_PATH) as f:
                 api_keys = load(f)
             self.__consumer_key = api_keys["consumer_key"]
             self.__consumer_secret = api_keys["consumer_secret"]
