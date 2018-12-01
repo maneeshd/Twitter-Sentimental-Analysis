@@ -1,18 +1,6 @@
 # **Twitter-Sentimental-Analysis**
 
-## Running the application
-
-1. Make sure you have all the requirements installed. See requirements.txt or run
-
-   *`pip install -r requirements.txt --upgrade`*
-
-2. Make sure you have the latest version of Mozilla Firefox installed and latest version of geckodriver in utils folder.
-
-**Run the application using:**
-  
-  **`python App.py`**
-
-## Problem Statement
+## Project Description
 
 IMDB provides a list of celebrities born on the current date. Below is the link: http://m.imdb.com/feature/bornondate
 
@@ -33,15 +21,15 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 
 ## Tools Used/Requirements
 
-1. [Python 3.6.1 (64-bit)](https://www.python.org/downloads/) - Well, you know what it is.
+1. [Python >= 3.6.1 (64-bit)](https://www.python.org/downloads/)
 
 2. [Beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/) - Python library for pulling data out of HTML and XML files.
 
-3. [Tweepy](http://www.tweepy.org/) - OpenSource python library for Twitter API.
+3. [Tweepy](http://www.tweepy.org/) - OpenSource Twitter API for Python.
 
 4. [Selenium](https://pypi.python.org/pypi/selenium) - The webdriver kit emulates a web-browser and executes JavaScripts to load the dynamic content.
 
-5. [Textblob](https://textblob.readthedocs.io/en/dev/) - Python library to perform sentiment analysis
+5. [Textblob](https://textblob.readthedocs.io/en/dev/) - Python library using [nltk](https://www.nltk.org/) to find polarity of text/tweet.
 
 6. [lxml](http://lxml.de/) - A fast html and xml parser for beautifulsoup4
 
@@ -49,7 +37,19 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 
 8. [Gecko Driver](https://github.com/mozilla/geckodriver/releases) - Driver for Selenium to invoke Firefox. 
 
-**Note: Requires Mozilla Firefox Web browser to work | API Keys for Twitter has to be put in /data/twitter_api_keys.dat**
+**Note: Requires Mozilla Firefox Web browser to work & API Keys for Twitter has to be put in /data/twitter_api_keys.dat**
+
+## Running the application
+
+1. Make sure you have all the requirements installed. See requirements.txt or run
+
+   *```pip install -r requirements.txt --upgrade```*
+
+2. Make sure you have the latest version of Mozilla Firefox installed and latest version of geckodriver in utils folder.
+
+**Run the application using:**
+  
+  **```python App.py```**
 
 ## Author
 Maneesh D - maneeshd77@gmail.com
