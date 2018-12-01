@@ -37,7 +37,7 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 
 8. [Gecko Driver](https://github.com/mozilla/geckodriver/releases) - Driver for Selenium to invoke Firefox.
 
-9.[API Keys for Twitter](https://developer.twitter.com/) has to be put in ```/data/twitter_api_keys.json``` (Refer [sample_twitter_api_keys.json](data/sample_twitter_api_keys.json) for format.)
+9. [API Keys for Twitter](https://developer.twitter.com/) has to be put in ```/data/twitter_api_keys.json``` (Refer [sample_twitter_api_keys.json](data/sample_twitter_api_keys.json) for format.)
 
 ## Running the application
 
