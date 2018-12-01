@@ -11,10 +11,10 @@ from json import dump
 from os import getcwd
 from os import path
 from sqlite3 import connect
+from TwitterSentiment import TwitterSentiment
+from Scraper import ImdbScraper
 
 DIR_PATH = path.dirname(path.abspath(__file__))
-SCRAPER = __import__("Scraper")
-SENTIMENT = __import__("TwitterSentiment")
 URL = "http://m.imdb.com/feature/bornondate"
 
 
@@ -26,13 +26,13 @@ def main():
     print("-" * len("TWITTER SENTIMENTAL ANALYSIS"))
 
     # get the scraper object to scrape IMDb
-    my_scraper = SCRAPER.ImdbScraper(URL)
+    my_scraper = ImdbScraper(URL)
     print("Scraping IMDb...Please wait...")
     my_scraper.scrape_imdb()
     print("Successfully scraped IMDb...\n")
 
     # Perforn Twitter Sentiment Analysis
-    sentiment_analyzer = SENTIMENT.TwitterSentiment()
+    sentiment_analyzer = TwitterSentiment()
     result = sentiment_analyzer.get_twitter_sentiment()
     if result == -1:
         print("Twitter Sentiment Analysis Failed...")
