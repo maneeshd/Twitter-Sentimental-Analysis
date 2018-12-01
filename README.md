@@ -35,9 +35,9 @@ Once you have this list, run a sentiment analysis on twitter for each celebrity 
 
 7. [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) - Web Browser to perform web scraping.
 
-8. [Gecko Driver](https://github.com/mozilla/geckodriver/releases) - Driver for Selenium to invoke Firefox. 
+8. [Gecko Driver](https://github.com/mozilla/geckodriver/releases) - Driver for Selenium to invoke Firefox.
 
-**Note: Requires Mozilla Firefox Web browser to work & API Keys for Twitter has to be put in /data/twitter_api_keys.dat**
+9. API Keys for Twitter has to be put in ```/data/twitter_api_keys.json``` (Refer [sample_twitter_api_keys.json](data/sample_twitter_api_keys.json) for format.)
 
 ## Running the application
 
